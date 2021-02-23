@@ -25,6 +25,14 @@ class ListaCircular:
             self.head.next = new_nodo
         self.size +=1
 
+    def palabra(self):
+            palabra=''
+            aux = self.head
+            for _ in range(self.size):
+                palabra = palabra+aux.codigo
+                aux =aux.next
+            return palabra
+            
     def imprimir (self):
         if self.head is None:
             return
@@ -38,9 +46,13 @@ class ListaCircular:
         if self.head is None:
             return
         Nodo = self.head
-        print(Nodo.Lista.codigo , end = "=>")
+        print('\n'+Nodo.Lista.codigo , end = "=>")
         while Nodo.next != self.head:
             Nodo = Nodo.next
             print( Nodo.Lista.codigo  , end = "=>")
+
+    
+
+
 
     

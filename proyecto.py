@@ -8,6 +8,7 @@ def leerArchivo():
     archivo = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
     return archivo  
 
+
 class proyect:
         
     def menu(self):
@@ -22,39 +23,23 @@ class proyect:
                 archivo = minidom.parse(j)
                 matrizz = archivo.getElementsByTagName('matriz')
                 for matriz in matrizz:
-                    parcial = lista.ListaCircular()
-                    entera = lista.ListaCircular()
                     nombre = matriz.getAttribute('nombre')
-                    n = matriz.getAttribute('n')
-                    m = matriz.getAttribute('m')#numero que toma para cantidad de columnas
-                    y = int(n)*int(m)
-                    entera.insertar(lista.Lista(nombre))
-                    entera.insertar(lista.Lista(n))
-                    entera.insertar(lista.Lista(m))
-                    entera.imprimir1()
-                    parcial.insertar(lista.Lista(entera))
-                    for dat in range(y):
-                        x = matriz.getElementsByTagName('dato')[dat]
-                        e = x.firstChild.data
-                        u = int(x.getAttribute('x'))
-                         
-                        
-                    general.insertar(lista.Lista(parcial))
-                    
-
-                    '''for dat in range(0, y):
-                        x = archivo.getElementsByTagName('dato')[dat]
-                        e = x.firstChild.data
-                        u = int(x.getAttribute('y'))
-                        for i in range(1,int(m)+1):
-                            if  i == u:
-                                entera1 = lista.ListaCircular()
-                                entera1.insertar(lista.Lista(e))
-                                
-                                entera1.imprimir()
-                                parcial.insertar(lista.Lista(entera1))
-                    parcial.insertar(lista.Lista(entera))
-                    general.insertar(lista.Lista(parcial))'''
+                    n = int(matriz.getAttribute('n'))
+                    m = int(matriz.getAttribute('m'))
+                    mat = lista.Lista(lista.ListaCircular(),nombre,n,m)
+                    for i in range(n):
+                        parcial = lista.Lista(lista.ListaCircular(),None,i,None)
+                        for k in range(m):
+                            x = matriz.getElementsByTagName('dato')[i*m+k]
+                            e = x.firstChild.data
+                            entera = lista.ListaCircular()
+                            entera.insertar(lista.Lista(e,None,None,k))
+                            parcial.codigo = entera
+                            parcial.codigo.imprimir1()
+                        mat.codigo.insertar(parcial)
+                    general.insertar(mat)
+                print('hola') 
+              
                 
                 print('\n--> El archivo fue cargado correctamente\n')  
                             
