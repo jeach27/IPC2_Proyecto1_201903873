@@ -1,7 +1,10 @@
 
 class Lista:
-    def __init__(self, codigo):
+    def __init__(self, codigo, nombre, n, m):
         self.codigo = codigo
+        self.nombre = nombre
+        self.n = n
+        self.m = m
         
 class Nodo:
     def __init__(self, Lista=None, next = None):
@@ -26,9 +29,18 @@ class ListaCircular:
         if self.head is None:
             return
         Nodo = self.head
-        print(Nodo.Lista.codigo , end = "\n")
+        print('\n'+Nodo.Lista.codigo)
         while Nodo.next != self.head:
             Nodo = Nodo.next
-            print( Nodo.Lista.codigo  , end = "\n")
+            print( '\n'+Nodo.Lista.codigo)
+
+    def imprimir1 (self):
+        if self.head is None:
+            return
+        Nodo = self.head
+        print(Nodo.Lista.codigo , end = "=>")
+        while Nodo.next != self.head:
+            Nodo = Nodo.next
+            print( Nodo.Lista.codigo  , end = "=>")
 
     

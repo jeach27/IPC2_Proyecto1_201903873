@@ -26,38 +26,44 @@ class proyect:
                     entera = lista.ListaCircular()
                     nombre = matriz.getAttribute('nombre')
                     n = matriz.getAttribute('n')
-                    m = matriz.getAttribute('m')
+                    m = matriz.getAttribute('m')#numero que toma para cantidad de columnas
                     y = int(n)*int(m)
                     entera.insertar(lista.Lista(nombre))
                     entera.insertar(lista.Lista(n))
                     entera.insertar(lista.Lista(m))
-                    entera.imprimir()
-                    for dat in range(0, y):
-                        entera1 = lista.ListaCircular()
-                        x = archivo.getElementsByTagName('dato')[dat]
-                        e = x.firstChild.data
-                        entera1.insertar(lista.Lista(e))
-                        parcial.insertar(lista.Lista(entera1))
-                        entera1.imprimir()
-                        
+                    entera.imprimir1()
                     parcial.insertar(lista.Lista(entera))
+                    for dat in range(y):
+                        x = matriz.getElementsByTagName('dato')[dat]
+                        e = x.firstChild.data
+                        u = int(x.getAttribute('x'))
+                         
+                        
                     general.insertar(lista.Lista(parcial))
                     
+
+                    '''for dat in range(0, y):
+                        x = archivo.getElementsByTagName('dato')[dat]
+                        e = x.firstChild.data
+                        u = int(x.getAttribute('y'))
+                        for i in range(1,int(m)+1):
+                            if  i == u:
+                                entera1 = lista.ListaCircular()
+                                entera1.insertar(lista.Lista(e))
+                                
+                                entera1.imprimir()
+                                parcial.insertar(lista.Lista(entera1))
+                    parcial.insertar(lista.Lista(entera))
+                    general.insertar(lista.Lista(parcial))'''
                 
-
-
-                      
                 print('\n--> El archivo fue cargado correctamente\n')  
-             
-                
+                            
             elif n=='2': 
                 print('-------------------Procesar Archivo------------------\n')
-                     
-                
+                           
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
-                
-                
+                            
             elif n=='4':
                 print('----------------Datos Estudiantiles---------------------')
                 print('\nCarné: 201903873')
@@ -68,8 +74,7 @@ class proyect:
                 
             elif n=='5':
                 print('----------------Generar Gráfica-------------------------')
-                
-            
+                        
             elif n=='6':
                 print('-----------------------Salir-----------------------------')
                 
