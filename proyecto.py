@@ -8,6 +8,10 @@ def leerArchivo():
     archivo = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
     return archivo  
 
+def matrizBinaria(fila):
+    for i in range(1,10):
+        fila = fila.replace(str(i),'1')
+    return fila
 
 class proyect:
         
@@ -37,9 +41,10 @@ class proyect:
                             entera.insertar(lista.Lista(e,None,None,k))
                         pal = entera.palabra()
                         parcial.codigo = pal
-                        print(parcial.codigo)
+                        #print(parcial.codigo)
                         mat.codigo.insertar(parcial)
                     general.insertar(mat)
+                
                  
               
                 
@@ -47,9 +52,43 @@ class proyect:
                             
             elif n=='2': 
                 print('-------------------Procesar Archivo------------------\n')
-                           
+                if general.head is None:
+                    print('No se a cargado ningun archivo')
+                else:
+                    nodo = general.head
+                    for _ in range(general.size):
+                        name = nodo.Lista.nombre
+                        columnas = nodo.Lista.m
+                        filas = nodo.Lista.n
+                        print(name + str(columnas) + str(filas))
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            filaa = nodo1.Lista.codigo
+                            fila = nodo1.Lista.n
+                            e = matrizBinaria(filaa)
+                            print(e + str(fila))
+                            nodo1 = nodo1.next
+                        nodo = nodo.next
+                         
+
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
+                if general.head is None:
+                    print('No se a cargado ningun archivo')
+                else:
+                    nodo = general.head
+                    for _ in range(general.size):
+                        name = nodo.Lista.nombre
+                        columnas = nodo.Lista.m
+                        filas = nodo.Lista.n
+                        print(name + str(columnas) + str(filas))
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            filaa = nodo1.Lista.codigo
+                            fila = nodo1.Lista.n
+                            print(filaa + str(fila))
+                            nodo1 = nodo1.next
+                        nodo = nodo.next
                             
             elif n=='4':
                 print('----------------Datos Estudiantiles---------------------')
@@ -61,6 +100,22 @@ class proyect:
                 
             elif n=='5':
                 print('----------------Generar Gráfica-------------------------')
+                if general.head is None:
+                    print('No se a cargado ningun archivo')
+                else:
+                    nodo = general.head
+                    for _ in range(general.size):
+                        name = nodo.Lista.nombre
+                        columnas = nodo.Lista.m
+                        filas = nodo.Lista.n
+                        print(name + str(columnas) + str(filas))
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            filaa = nodo1.Lista.codigo
+                            fila = nodo1.Lista.n
+                            print(filaa + str(fila))
+                            nodo1 = nodo1.next
+                        nodo = nodo.next
                         
             elif n=='6':
                 print('-----------------------Salir-----------------------------')
