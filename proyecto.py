@@ -27,18 +27,20 @@ class proyect:
                     n = int(matriz.getAttribute('n'))
                     m = int(matriz.getAttribute('m'))
                     mat = lista.Lista(lista.ListaCircular(),nombre,n,m)
-                    for i in range(n):
-                        parcial = lista.Lista(lista.ListaCircular(),None,i,None)
-                        for k in range(m):
+                    for i in range(m):
+                        palabra=''
+                        parcial = lista.Lista(palabra,None,i,None)
+                        entera = lista.ListaCircular()
+                        for k in range(n):
                             x = matriz.getElementsByTagName('dato')[i*m+k]
                             e = x.firstChild.data
-                            entera = lista.ListaCircular()
                             entera.insertar(lista.Lista(e,None,None,k))
-                            parcial.codigo = entera
-                            parcial.codigo.imprimir1()
+                        pal = entera.palabra()
+                        parcial.codigo = pal
+                        print(parcial.codigo)
                         mat.codigo.insertar(parcial)
                     general.insertar(mat)
-                print('hola') 
+                 
               
                 
                 print('\n--> El archivo fue cargado correctamente\n')  

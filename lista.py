@@ -17,21 +17,30 @@ class ListaCircular:
         self.size = 0
     
     def insertar(self, valor):
+        new_nodo = Nodo(Lista = valor, next = self.head)
         if self.size == 0:
-            self.head = Nodo(Lista = valor )
-            self.head.next = self.head
+            self.head = new_nodo
+            new_nodo.next = self.head
         else:
-            new_nodo = Nodo(Lista = valor, next = self.head.next)
-            self.head.next = new_nodo
+            cur = self.head
+            while cur.next is not self.head:
+                cur = cur.next
+            cur.next = new_nodo
+            new_nodo.next = self.head
         self.size +=1
 
     def palabra(self):
-            palabra=''
-            aux = self.head
-            for _ in range(self.size):
-                palabra = palabra+aux.codigo
-                aux =aux.next
-            return palabra
+        if self.head is None:
+            return
+        aux = self.head
+        palabra=''
+        palabra = palabra + aux.Lista.codigo
+        while aux.next != self.head:
+            aux = aux.next
+            palabra = palabra + aux.Lista.codigo
+            
+        return palabra
+            
             
     def imprimir (self):
         if self.head is None:
