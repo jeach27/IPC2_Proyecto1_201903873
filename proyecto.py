@@ -3,6 +3,7 @@ import tkinter
 from tkinter import filedialog
 import lista
 from xml.dom import minidom
+import os
 
 def leerArchivo():
     archivo = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
@@ -12,6 +13,12 @@ def matrizBinaria(fila):
     for i in range(1,10):
         fila = fila.replace(str(i),'1')
     return fila
+
+def crearNodo(identificador, nombre , shape):
+    return identificador + '[label="'+ nombre +'",shape="'+ shape +'"]\n'
+
+def unirNodo(NodoA ,NodoB):
+    return NodoA + '->' + NodoB + '\n'
 
 class proyect:
         
@@ -44,9 +51,7 @@ class proyect:
                         #print(parcial.codigo)
                         mat.codigo.insertar(parcial)
                     general.insertar(mat)
-                
-                 
-              
+               
                 
                 print('\n--> El archivo fue cargado correctamente\n')  
                             
@@ -60,17 +65,16 @@ class proyect:
                         name = nodo.Lista.nombre
                         columnas = nodo.Lista.m
                         filas = nodo.Lista.n
-                        print(name + str(columnas) + str(filas))
+                        print('<Calculando Matriz Binaria>')
                         nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             filaa = nodo1.Lista.codigo
-                            fila = nodo1.Lista.n
+                            #fila = nodo1.Lista.n
                             e = matrizBinaria(filaa)
-                            print(e + str(fila))
+                            nodo1.Lista.codigo = e
                             nodo1 = nodo1.next
                         nodo = nodo.next
                          
-
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
                 if general.head is None:
@@ -103,20 +107,23 @@ class proyect:
                 if general.head is None:
                     print('No se a cargado ningun archivo')
                 else:
+                    file = open('grafo.dot','w')
+                    file.write('digraph G{\n')
+                    file.write('A[label="Matrices", shape="circle"]\n')
+                    
                     nodo = general.head
                     for _ in range(general.size):
                         name = nodo.Lista.nombre
-                        columnas = nodo.Lista.m
-                        filas = nodo.Lista.n
-                        print(name + str(columnas) + str(filas))
-                        nodo1 = nodo.Lista.codigo.head
-                        for _ in range(nodo.Lista.codigo.size):
-                            filaa = nodo1.Lista.codigo
-                            fila = nodo1.Lista.n
-                            print(filaa + str(fila))
-                            nodo1 = nodo1.next
+                        file.write(crearNodo(str(nodo),str(name),"circle"))
                         nodo = nodo.next
-                        
+                    nodo = general.head
+                    for _ in range(general.size):
+                        file.write(unirNodo("A",str(nodo)))
+                        nodo = nodo.next
+                    file.write('}')
+                    file.close()
+                    os.system('dot -Tpng grafo.dot -o grafo.png')
+                    os.startfile('grafo.png')    
             elif n=='6':
                 print('-----------------------Salir-----------------------------')
                 

@@ -1,0 +1,9 @@
+digraph G{
+A[label="Matrices", shape="circle"]
+<lista.Nodo object at 0x0000022E0E9F46A0>[label="matriz_n_1",shape="circle"]
+<lista.Nodo object at 0x0000022E0E9AEBE0>[label="matriz_n_2",shape="circle"]
+<lista.Nodo object at 0x0000022E0E9F9FD0>[label="matriz_n_3",shape="circle"]
+A-><lista.Nodo object at 0x0000022E0E9F46A0>
+A-><lista.Nodo object at 0x0000022E0E9AEBE0>
+A-><lista.Nodo object at 0x0000022E0E9F9FD0>
+}
