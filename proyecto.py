@@ -39,7 +39,8 @@ class proyect:
             print('\n1.Cargar Archivo\n2.Procesar Archivo\n3.Escribir Archivo Salida\n4.Mostrar Datos Estudiantes\n5.Generar Gráfica\n6.Salir')
             n=input('\n> Ingrese valor\n')
             if n=='1':
-                j = leerArchivo()
+                print('----------------------Cargar Archivo------------------------')
+                j = input('Ingrese ruta de archivo')
                 archivo = minidom.parse(j)
                 matrizz = archivo.getElementsByTagName('matriz')
                 for matriz in matrizz:
@@ -142,71 +143,78 @@ class proyect:
                     for _ in range(general.size):
                         nombre = nodo.Lista.nombre
                         print(str(_+1)+'. '+nombre)
-
-                    graficar = input('Ingrese valor de matriz a graficar')
-                        
-                    file = open('grafo.dot','w')
-                    file.write('digraph G{\n')
-                    file.write('A[label="Matrices", shape="circle"]\n')
-
-                    nodo = general.head
-                    for _ in range(general.size):
-                        name = nodo.Lista.nombre
-                        n = nodo.Lista.n
-                        m = nodo.Lista.m
-                        file.write(crearNodo(str(nodo),str(name),"circle"))
-                        if n == m:
-                            file.write(crearNodo(str(n)+str(m),"n="+str(n)+" "+"m="+str(m),"box"))
-                        else:
-                            file.write(crearNodo(str(n),"n="+str(n),"box"))
-                            file.write(crearNodo(str(m),"m="+str(m),"box"))
                         nodo = nodo.next
+                    
+                    graficar = input('Ingrese valor de matriz a graficar\n')
+                    if int(graficar) > general.size:
+                        print('No has pulsado una opcion correcta\n')
+                    else:
+                        file = open('grafo.dot','w')
+                        file.write('digraph G{\n')
+                        file.write('A[label="Matrices", shape="circle"]\n')
 
-                    nodo = general.head
-                    for _ in range(general.size):
-                        name = nodo.Lista.nombre
-                        n = nodo.Lista.n
-                        m = nodo.Lista.m
-                        nodo1 = nodo.Lista.codigo.head
-                        for _ in range(nodo.Lista.codigo.size):
-                            filaa = nodo1.Lista.codigo
-                            fila = nodo1.Lista.n
-                            file.write(crearNodo(str(fila)+str(m)+str(n),ReconstruirFila(filaa),"Mrecord"))
-                            nodo1 = nodo1.next
-                        nodo = nodo.next
+                        nodo = general.head
+                        for _ in range(general.size):
+                            name = nodo.Lista.nombre
+                            n = nodo.Lista.n
+                            m = nodo.Lista.m
+                            if graficar == str(_+1):
+                                file.write(crearNodo(str(nodo),str(name),"circle"))
+                                if n == m:
+                                    file.write(crearNodo(str(n)+str(m),"n="+str(n)+" "+"m="+str(m),"box"))
+                                else:
+                                    file.write(crearNodo(str(n),"n="+str(n),"box"))
+                                    file.write(crearNodo(str(m),"m="+str(m),"box"))
+                            nodo = nodo.next
 
-                    nodo = general.head
-                    for _ in range(general.size):
-                        n = nodo.Lista.n
-                        m = nodo.Lista.m
-                        file.write(unirNodo("A",str(nodo)))
-                        if n == m:
-                            file.write(unirNodo(str(nodo),str(n)+str(m)))
-                        else:
-                            file.write(unirNodo(str(nodo),str(n)))
-                            file.write(unirNodo(str(nodo),str(m)))
-                        nodo = nodo.next
-                        
-                    nodo = general.head
-                    for _ in range(general.size):
-                        n = nodo.Lista.n
-                        m = nodo.Lista.m
-                        nodo1 = nodo.Lista.codigo.head
-                        for _ in range(nodo.Lista.codigo.size):
-                            filaa = nodo1.Lista.codigo
-                            fila = nodo1.Lista.n
-                            if _ == 0:
-                                file.write(unirNodo(str(nodo), str(fila)+str(m)+str(n)))
-                            else:
-                                anterior = fila-1
-                                file.write(unirNodo(str(anterior)+str(m)+str(n),str(fila)+str(m)+str(n)))
-                            nodo1 = nodo1.next
-                        nodo = nodo.next
-                        
-                    file.write('}')
-                    file.close()
-                    os.system('dot -Tpng grafo.dot -o grafo.jpg')
-                    os.startfile('grafo.jpg')    
+                        nodo = general.head
+                        for _ in range(general.size):
+                            name = nodo.Lista.nombre
+                            n = nodo.Lista.n
+                            m = nodo.Lista.m
+                            if graficar == str(_+1):
+                                nodo1 = nodo.Lista.codigo.head
+                                for _ in range(nodo.Lista.codigo.size):
+                                    filaa = nodo1.Lista.codigo
+                                    fila = nodo1.Lista.n
+                                    file.write(crearNodo(str(fila)+str(m)+str(n),ReconstruirFila(filaa),"Mrecord"))
+                                    nodo1 = nodo1.next
+                            nodo = nodo.next
+
+                        nodo = general.head
+                        for _ in range(general.size):
+                            n = nodo.Lista.n
+                            m = nodo.Lista.m
+                            if graficar == str(_+1):
+                                file.write(unirNodo("A",str(nodo)))
+                                if n == m:
+                                    file.write(unirNodo(str(nodo),str(n)+str(m)))
+                                else:
+                                    file.write(unirNodo(str(nodo),str(n)))
+                                    file.write(unirNodo(str(nodo),str(m)))
+                            nodo = nodo.next
+                            
+                        nodo = general.head
+                        for _ in range(general.size):
+                            n = nodo.Lista.n
+                            m = nodo.Lista.m
+                            if graficar == str(_+1):
+                                nodo1 = nodo.Lista.codigo.head
+                                for _ in range(nodo.Lista.codigo.size):
+                                    filaa = nodo1.Lista.codigo
+                                    fila = nodo1.Lista.n
+                                    if _ == 0:
+                                        file.write(unirNodo(str(nodo), str(fila)+str(m)+str(n)))
+                                    else:
+                                        anterior = fila-1
+                                        file.write(unirNodo(str(anterior)+str(m)+str(n),str(fila)+str(m)+str(n)))
+                                    nodo1 = nodo1.next
+                            nodo = nodo.next
+                            
+                        file.write('}')
+                        file.close()
+                        os.system('dot -Tpng grafo.dot -o grafo.jpg')
+                        os.startfile('grafo.jpg')    
 
             elif n=='6':
                 print('-----------------------Salir-----------------------------')
