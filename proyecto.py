@@ -20,10 +20,19 @@ def crearNodo(identificador, nombre , shape):
 def unirNodo(NodoA ,NodoB):
     return NodoA + '->' + NodoB + '\n'
 
+def ReconstruirFila(fila):
+    nueva = list()
+    for letra in fila:
+        nueva.append(letra)
+    retorno = " | ".join(nueva)
+    final = '{ { '+ retorno +' } }'
+    return final
+
 class proyect:
         
     def menu(self):
         general = lista.ListaCircular()
+        cambiada = lista.ListaCircular()
         while True:
             print('\n----------------Menú principal--------------------')
             print('\n> Elija una opcion')
@@ -51,17 +60,38 @@ class proyect:
                         #print(parcial.codigo)
                         mat.codigo.insertar(parcial)
                     general.insertar(mat)
-               
-                
+
+                for matri in matrizz:
+                    Name = matri.getAttribute('nombre')
+                    N = int(matri.getAttribute('n'))
+                    M = int(matri.getAttribute('m'))
+                    matt = lista.Lista(lista.ListaCircular(),Name,N,M)
+                    for i in range(M):
+                        palabras=''
+                        parciales = lista.Lista(palabras,None,i,None)
+                        enteras = lista.ListaCircular()
+                        for k in range(N):
+                            y = matri.getElementsByTagName('dato')[i*M+k]
+                            p = y.firstChild.data
+                            enteras.insertar(lista.Lista(p,None,None,k))
+                        pal = enteras.palabra()
+                        parciales.codigo = pal
+                        #print(parcial.codigo)
+                        matt.codigo.insertar(parcial)
+                    cambiada.insertar(matt)
+                    
+
                 print('\n--> El archivo fue cargado correctamente\n')  
-                            
+            
             elif n=='2': 
                 print('-------------------Procesar Archivo------------------\n')
-                if general.head is None:
+                
+                if cambiada.head is None:
                     print('No se a cargado ningun archivo')
                 else:
-                    nodo = general.head
-                    for _ in range(general.size):
+                    
+                    nodo = cambiada.head
+                    for _ in range(cambiada.size):
                         name = nodo.Lista.nombre
                         columnas = nodo.Lista.m
                         filas = nodo.Lista.n
@@ -69,12 +99,12 @@ class proyect:
                         nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             filaa = nodo1.Lista.codigo
-                            #fila = nodo1.Lista.n
+                            fila = nodo1.Lista.n
                             e = matrizBinaria(filaa)
                             nodo1.Lista.codigo = e
                             nodo1 = nodo1.next
                         nodo = nodo.next
-                         
+      
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
                 if general.head is None:
@@ -107,23 +137,77 @@ class proyect:
                 if general.head is None:
                     print('No se a cargado ningun archivo')
                 else:
+                    print('--------------Matrices---------------')
+                    nodo = general.head
+                    for _ in range(general.size):
+                        nombre = nodo.Lista.nombre
+                        print(str(_+1)+'. '+nombre)
+
+                    graficar = input('Ingrese valor de matriz a graficar')
+                        
                     file = open('grafo.dot','w')
                     file.write('digraph G{\n')
                     file.write('A[label="Matrices", shape="circle"]\n')
-                    
+
                     nodo = general.head
                     for _ in range(general.size):
                         name = nodo.Lista.nombre
+                        n = nodo.Lista.n
+                        m = nodo.Lista.m
                         file.write(crearNodo(str(nodo),str(name),"circle"))
+                        if n == m:
+                            file.write(crearNodo(str(n)+str(m),"n="+str(n)+" "+"m="+str(m),"box"))
+                        else:
+                            file.write(crearNodo(str(n),"n="+str(n),"box"))
+                            file.write(crearNodo(str(m),"m="+str(m),"box"))
                         nodo = nodo.next
+
                     nodo = general.head
                     for _ in range(general.size):
-                        file.write(unirNodo("A",str(nodo)))
+                        name = nodo.Lista.nombre
+                        n = nodo.Lista.n
+                        m = nodo.Lista.m
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            filaa = nodo1.Lista.codigo
+                            fila = nodo1.Lista.n
+                            file.write(crearNodo(str(fila)+str(m)+str(n),ReconstruirFila(filaa),"Mrecord"))
+                            nodo1 = nodo1.next
                         nodo = nodo.next
+
+                    nodo = general.head
+                    for _ in range(general.size):
+                        n = nodo.Lista.n
+                        m = nodo.Lista.m
+                        file.write(unirNodo("A",str(nodo)))
+                        if n == m:
+                            file.write(unirNodo(str(nodo),str(n)+str(m)))
+                        else:
+                            file.write(unirNodo(str(nodo),str(n)))
+                            file.write(unirNodo(str(nodo),str(m)))
+                        nodo = nodo.next
+                        
+                    nodo = general.head
+                    for _ in range(general.size):
+                        n = nodo.Lista.n
+                        m = nodo.Lista.m
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            filaa = nodo1.Lista.codigo
+                            fila = nodo1.Lista.n
+                            if _ == 0:
+                                file.write(unirNodo(str(nodo), str(fila)+str(m)+str(n)))
+                            else:
+                                anterior = fila-1
+                                file.write(unirNodo(str(anterior)+str(m)+str(n),str(fila)+str(m)+str(n)))
+                            nodo1 = nodo1.next
+                        nodo = nodo.next
+                        
                     file.write('}')
                     file.close()
-                    os.system('dot -Tpng grafo.dot -o grafo.png')
-                    os.startfile('grafo.png')    
+                    os.system('dot -Tpng grafo.dot -o grafo.jpg')
+                    os.startfile('grafo.jpg')    
+
             elif n=='6':
                 print('-----------------------Salir-----------------------------')
                 

@@ -40,8 +40,7 @@ class ListaCircular:
             palabra = palabra + aux.Lista.codigo
             
         return palabra
-            
-            
+       
     def imprimir (self):
         if self.head is None:
             return
