@@ -1,6 +1,6 @@
 
 class Lista:
-    def __init__(self, codigo, nombre, n, m):
+    def __init__(self, codigo, nombre, n, m, g):
         self.codigo = codigo
         self.nombre = nombre
         self.n = n
@@ -41,7 +41,7 @@ class ListaCircular:
             
         return palabra
        
-    def imprimir (self):
+    def imprimir(self):
         if self.head is None:
             return
         Nodo = self.head
@@ -50,14 +50,43 @@ class ListaCircular:
             Nodo = Nodo.next
             print( '\n'+Nodo.Lista.codigo)
 
-    def imprimir1 (self):
+    def imprimir1(self):
         if self.head is None:
             return
         Nodo = self.head
         print('\n'+Nodo.Lista.codigo , end = "=>")
         while Nodo.next != self.head:
             Nodo = Nodo.next
-            print( Nodo.Lista.codigo  , end = "=>")
+            if Nodo.next == self.head:
+                print(Nodo.Lista.codigo+'\n')
+            else:
+                print( Nodo.Lista.codigo  , end = "=>")
+    
+    def ultimo(self):
+        if self.head is None:
+            return
+        Nodo = self.head
+        while Nodo != self.head:
+            if Nodo.next == self.head:
+                return Nodo.Lista.codigo
+
+    def eliminar(self, dato):
+        if self.head is None:
+            return
+        elif dato == self.head.Lista.codigo:
+            Nodo = self.head
+            while Nodo.next != self.head:
+                Nodo = Nodo.next
+            Nodo.next = self.head.next
+            self.head = self.head.next
+        else:
+            Nodo = self.head
+            pre = None
+            while Nodo.Lista.codigo != dato:
+                pre = Nodo
+                Nodo = Nodo.next
+            pre.next = Nodo.next
+
 
     
 

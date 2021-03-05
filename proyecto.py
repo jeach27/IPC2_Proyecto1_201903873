@@ -40,47 +40,45 @@ class proyect:
             n=input('\n> Ingrese valor\n')
             if n=='1':
                 print('----------------------Cargar Archivo------------------------')
-                j = input('Ingrese ruta de archivo')
+                j = input('Ingrese ruta de archivo\n')
                 archivo = minidom.parse(j)
                 matrizz = archivo.getElementsByTagName('matriz')
                 for matriz in matrizz:
                     nombre = matriz.getAttribute('nombre')
                     n = int(matriz.getAttribute('n'))
                     m = int(matriz.getAttribute('m'))
-                    mat = lista.Lista(lista.ListaCircular(),nombre,n,m)
-                    for i in range(m):
+                    mat = lista.Lista(lista.ListaCircular(),nombre,n,m,None)
+                    for i in range(n):
                         palabra=''
-                        parcial = lista.Lista(palabra,None,i,None)
+                        parcial = lista.Lista(palabra,None,i,None,None)
                         entera = lista.ListaCircular()
-                        for k in range(n):
+                        for k in range(m):
                             x = matriz.getElementsByTagName('dato')[i*m+k]
                             e = x.firstChild.data
-                            entera.insertar(lista.Lista(e,None,None,k))
+                            entera.insertar(lista.Lista(e,None,None,k,None))
                         pal = entera.palabra()
                         parcial.codigo = pal
                         #print(parcial.codigo)
                         mat.codigo.insertar(parcial)
                     general.insertar(mat)
-
-                for matri in matrizz:
-                    Name = matri.getAttribute('nombre')
-                    N = int(matri.getAttribute('n'))
-                    M = int(matri.getAttribute('m'))
-                    matt = lista.Lista(lista.ListaCircular(),Name,N,M)
-                    for i in range(M):
-                        palabras=''
-                        parciales = lista.Lista(palabras,None,i,None)
-                        enteras = lista.ListaCircular()
-                        for k in range(N):
-                            y = matri.getElementsByTagName('dato')[i*M+k]
-                            p = y.firstChild.data
-                            enteras.insertar(lista.Lista(p,None,None,k))
-                        pal = enteras.palabra()
-                        parciales.codigo = pal
-                        #print(parcial.codigo)
-                        matt.codigo.insertar(parcial)
-                    cambiada.insertar(matt)
                     
+                for matt in matrizz:
+                    name = matt.getAttribute('nombre')
+                    N = int(matt.getAttribute('n'))
+                    M = int(matt.getAttribute('m'))
+                    mate = lista.Lista(lista.ListaCircular(),name,N,M,None)
+                    for h in range(N):
+                        palabras = ''
+                        parciales = lista.Lista(palabras,None,h,None,None)
+                        enteras = lista.ListaCircular()
+                        for q in range(M):
+                            y = matt.getElementsByTagName('dato')[h*M+q]
+                            z = y.firstChild.data
+                            enteras.insertar(lista.Lista(z,None,None,q,None))
+                        pala = enteras.palabra()
+                        parciales.codigo = pala
+                        mate.codigo.insertar(parciales)
+                    cambiada.insertar(mate)
 
                 print('\n--> El archivo fue cargado correctamente\n')  
             
@@ -90,7 +88,6 @@ class proyect:
                 if cambiada.head is None:
                     print('No se a cargado ningun archivo')
                 else:
-                    
                     nodo = cambiada.head
                     for _ in range(cambiada.size):
                         name = nodo.Lista.nombre
@@ -100,12 +97,34 @@ class proyect:
                         nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             filaa = nodo1.Lista.codigo
-                            fila = nodo1.Lista.n
                             e = matrizBinaria(filaa)
                             nodo1.Lista.codigo = e
+                            print(nodo1.Lista.codigo)
                             nodo1 = nodo1.next
                         nodo = nodo.next
-      
+
+                    nodo = cambiada.head
+                    for _ in range(cambiada.size):
+                        nam = nodo.Lista.nombre
+                        print(nam)
+                        pos = lista.ListaCircular()
+                        nodo1 = nodo.Lista.codigo.head
+                        for _ in range(nodo.Lista.codigo.size):
+                            fil = nodo1.Lista.codigo
+                            posiciones = lista.ListaCircular()
+                            nodo2 = nodo.Lista.codigo.head
+                            for _ in range(nodo.Lista.codigo.size):
+                                fill = nodo2.Lista.codigo
+                                if fil == fill:
+                                    if _ != posiciones.ultimo():
+                                        posiciones.insertar(lista.Lista(str(_),nam,None,None,None))
+                                        
+                                nodo2 = nodo2.next
+                            posiciones.imprimir1()
+                            pos.insertar(lista.Lista(posiciones,nam,None,None,None))
+                            nodo1 = nodo1.next
+                        nodo = nodo.next
+
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
                 if general.head is None:
