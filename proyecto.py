@@ -33,6 +33,7 @@ class proyect:
     def menu(self):
         general = lista.ListaCircular()
         cambiada = lista.ListaCircular()
+        salida = lista.ListaCircular()
         while True:
             print('\n----------------Menú principal--------------------')
             print('\n> Elija una opcion')
@@ -99,31 +100,57 @@ class proyect:
                             filaa = nodo1.Lista.codigo
                             e = matrizBinaria(filaa)
                             nodo1.Lista.codigo = e
-                            print(nodo1.Lista.codigo)
+                            #print(nodo1.Lista.codigo)
                             nodo1 = nodo1.next
                         nodo = nodo.next
 
                     nodo = cambiada.head
+                    posic = lista.ListaCircular()
                     for _ in range(cambiada.size):
                         nam = nodo.Lista.nombre
-                        print(nam)
+                        #print(nam)
+                        print('<Calculando posiciones>')
                         pos = lista.ListaCircular()
                         nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             fil = nodo1.Lista.codigo
-                            posiciones = lista.ListaCircular()
-                            nodo2 = nodo.Lista.codigo.head
-                            for _ in range(nodo.Lista.codigo.size):
-                                fill = nodo2.Lista.codigo
-                                if fil == fill:
-                                    if _ != posiciones.ultimo():
-                                        posiciones.insertar(lista.Lista(str(_),nam,None,None,None))
-                                        
-                                nodo2 = nodo2.next
-                            posiciones.imprimir1()
-                            pos.insertar(lista.Lista(posiciones,nam,None,None,None))
-                            nodo1 = nodo1.next
+                            if fil == 0:
+                                nodo1 = nodo1.next
+                            else:
+                                posiciones = lista.ListaCircular()
+                                nodo2 = nodo.Lista.codigo.head
+                                for _ in range(nodo.Lista.codigo.size):
+                                    fill = nodo2.Lista.codigo
+                                    if fil == fill:
+                                        if _ != posiciones.ultimo():
+                                            if fill != '0':
+                                                posiciones.insertar(lista.Lista(str(_),nam,None,None,None))
+                                                nodo2.Lista.codigo = '0'
+                                    nodo2 = nodo2.next
+                                #posiciones.imprimir1()
+                                pos.insertar(lista.Lista(posiciones,nam,None,None,None))
+                                nodo1 = nodo1.next
+                        posic.insertar(lista.Lista(pos, nam, None, None,None))
                         nodo = nodo.next
+
+                    nodo = general.head
+                    nodop = posic.head
+                    for _ in range(general.size):
+                        nomb = nodo.Lista.nombre
+                        nombr = nodop.Lista.nombre
+                        if nomb == nombr:
+                            print('<Realizando Suma de Tuplas>')
+                            nodo2 = nodo.Lista.codigo.head
+                            nodo2p = nodop.Lista.codigo.head
+                            for _ in range(nodo.Lista.codigo.size):
+                                pass
+                                 
+                            nodo = nodo.next
+                            nodop = nodop.next
+                        else:
+                            nodo = nodo.next
+
+
 
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
