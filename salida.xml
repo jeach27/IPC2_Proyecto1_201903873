@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<matrices>
+  <matriz nombre="matriz_n_1" n="15" m="15" g="87"/>
+  <matriz nombre="matriz_n_2" n="8" m="8" g="87"/>
+  <matriz nombre="matriz_n_3" n="5" m="5" g="87"/>
+</matrices>

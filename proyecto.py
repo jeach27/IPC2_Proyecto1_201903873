@@ -4,6 +4,7 @@ from tkinter import filedialog
 import lista
 from xml.dom import minidom
 import os
+import xml.etree.cElementTree as ET
 
 def leerArchivo():
     archivo = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
@@ -28,12 +29,20 @@ def ReconstruirFila(fila):
     final = '{ { '+ retorno +' } }'
     return final
 
+def prettify(elem):
+    """Return a pretty-printed XML string for the Element.
+    """
+    rough_string = ET.tostring(elem, 'utf-8').decode('utf8')
+    reparsed = minidom.parseString(rough_string)
+    return reparsed.toprettyxml(indent="  ")
+
 class proyect:
         
     def menu(self):
         general = lista.ListaCircular()
         cambiada = lista.ListaCircular()
         salida = lista.ListaCircular()
+        posic = lista.ListaCircular()
         while True:
             print('\n----------------Menú principal--------------------')
             print('\n> Elija una opcion')
@@ -105,12 +114,12 @@ class proyect:
                         nodo = nodo.next
 
                     nodo = cambiada.head
-                    posic = lista.ListaCircular()
+                    pos = lista.ListaCircular()
                     for _ in range(cambiada.size):
                         nam = nodo.Lista.nombre
                         #print(nam)
                         print('<Calculando posiciones>')
-                        pos = lista.ListaCircular()
+                        
                         nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             fil = nodo1.Lista.codigo
@@ -127,11 +136,14 @@ class proyect:
                                                 posiciones.insertar(lista.Lista(str(_),nam,None,None,None))
                                                 nodo2.Lista.codigo = '0'
                                     nodo2 = nodo2.next
-                                #posiciones.imprimir1()
-                                pos.insertar(lista.Lista(posiciones,nam,None,None,None))
+                                
+                                if posiciones.size != 0:
+                                    #posiciones.imprimir1()
+                                    pos.insertar(lista.Lista(posiciones,nam,None,None,None))
                                 nodo1 = nodo1.next
-                        posic.insertar(lista.Lista(pos, nam, None, None,None))
                         nodo = nodo.next
+                        posic.insertar(lista.Lista(pos, nam, None, None,None))
+                        
 
                     nodo = general.head
                     nodop = posic.head
@@ -150,26 +162,34 @@ class proyect:
                         else:
                             nodo = nodo.next
 
-
-
             elif n=='3': 
                 print('-------------------Escribir Archivo-------------------\n')
                 if general.head is None:
                     print('No se a cargado ningun archivo')
                 else:
+                    matrices = ET.Element('matrices')
                     nodo = general.head
-                    for _ in range(general.size):
+                    nodop = posic.head
+                    for _ in range(posic.size):
                         name = nodo.Lista.nombre
                         columnas = nodo.Lista.m
                         filas = nodo.Lista.n
-                        print(name + str(columnas) + str(filas))
-                        nodo1 = nodo.Lista.codigo.head
+                        posiciones = nodop.Lista.codigo.size
+                        matriz = ET.SubElement(matrices, 'matriz', nombre=name, n=str(filas), m=str(columnas), g=str(posiciones))
+                        nodo = nodo.next
+                        nodop = nodop.next    
+                        '''nodo1 = nodo.Lista.codigo.head
                         for _ in range(nodo.Lista.codigo.size):
                             filaa = nodo1.Lista.codigo
                             fila = nodo1.Lista.n
-                            print(filaa + str(fila))
-                            nodo1 = nodo1.next
-                        nodo = nodo.next
+                            #print(filaa + str(fila))
+                            nodo1 = nodo1.next'''
+                        
+                    arbol = prettify(matrices)
+                    f = open('salida.xml','w')
+                    f.write(arbol)
+                    f.close()
+                    print('Archivo de salida = '+'salida.xml')
                             
             elif n=='4':
                 print('----------------Datos Estudiantiles---------------------')
